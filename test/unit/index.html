@@ -1,0 +1,29 @@
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Mocha Tests</title>
+  <link rel="stylesheet" href="../../node_modules/mocha/mocha.css" />
+</head>
+<body>
+  <div id="mocha"></div>
+    <script src="../../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../../node_modules/mocha/mocha.js"></script>
+    <script src="../../node_modules/chai/chai.js"></script>
+    <script src="../../node_modules/sinon-chai/lib/sinon-chai.js"></script>
+    <script src="../../node_modules/sinon/pkg/sinon.js"></script>
+
+    <script src="../../bower_components/angular/angular.js"></script>
+    <script src="../../bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+    <script src="../../dist/js/app.js"></script>
+    <script src="../../dist/js/templates.js"></script>
+    <script src="../../config.js"></script>
+
+    <script>mocha.setup('bdd');</script>
+    <script>
+      mocha.checkLeaks();
+      expect = chai.expect;
+      mocha.setup('bdd');
+    </script>
+    <script src="../../bower_components/angular-mocks/angular-mocks.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+<div>
+    <input class="form-control"
+        ng-controller="abiLookupController"
+        ng-model="answers[question.id]" placeholder="Begin typing..." typeahead="result.name for result in getValues($viewValue)">
+    </input>
+    <p ng-if="errors[question.id]" class="form-control-static text-danger">{{errors[question.id]}}</p>
+</div>

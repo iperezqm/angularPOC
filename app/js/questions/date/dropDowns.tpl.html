@@ -1,0 +1,23 @@
+<div class="row" ng-controller="DropDownsController">
+    <div class="col-sm-4">
+        <select ng-model="day" class="form-control">
+            <option value='' disabled selected>Day...</option>
+            <option ng-repeat="day in days">{{day}}</option>
+        </select>
+    </div>
+    <div class="col-sm-4">
+        <select ng-model="month" class="form-control">
+            <option value='' disabled selected>Month...</option>
+            <option ng-repeat="month in months" value="{{month.month}}">{{month.name}}</option>
+        </select>
+    </div>
+    <div class="col-sm-4">
+        <select ng-model="year" class="form-control">
+            <option value='' disabled selected>Year...</option>
+            <option ng-repeat="year in years">{{year}}</option>
+        </select>
+    </div>
+    <div class="col-xs-12">
+        <p ng-if="errors[question.id]" class="form-control-static text-danger">{{errors[question.id]}}</p>
+    </div>
+</div>

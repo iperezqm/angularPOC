@@ -1,0 +1,15 @@
+<div>
+    <div class="btn-group">
+        <button
+            ng-model="$parent.answers[$parent.question.id]"
+            btn-radio="'{{value}}'"
+            class="btn"
+            ng-repeat="value in question.values"
+            ng-class="{'btn-success' : $parent.answers[$parent.question.id] === value, 'btn-default' : $parent.answers[$parent.question.id] !== value}">
+            {{value}}
+        </button>
+    </div>
+    <p ng-if="errors[question.id]" class="form-control-static text-danger">{{errors[question.id]}}</p>
+    <question-groups groups="question.groups" trigger-id="question.id" answers="answers">
+    </question-groups>
+</div>

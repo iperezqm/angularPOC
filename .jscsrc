@@ -1,0 +1,24 @@
+{
+    "preset": "crockford",
+    "disallowMultipleLineBreaks": true,
+    "disallowMultipleVarDecl": true,
+    "disallowSpaceAfterKeywords": [
+        "function"
+    ],
+    "requireAnonymousFunctions": true,
+    "requireMultipleVarDecl": null,
+    "requireSpaceAfterKeywords": [
+        "if",
+        "else",
+        "for",
+        "while",
+        "do",
+        "switch",
+        "case",
+        "return",
+        "try",
+        "catch",
+        "typeof",
+        "require"
+    ]
+}

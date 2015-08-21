@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Policy Expert</title>
+        <link href="dist/css/bootstrap.min.css" rel="stylesheet">
+        <link href="dist/css/bootstrap-theme.min.css" rel="stylesheet">
+        <style>
+            body {
+                padding-top: 15px;
+            }
+
+            .navbar-header > img {
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body ng-app="QMetric.internal.questionsetPOC">
+        <nav class="navbar">
+            <div class="container">
+                <div class="navbar-header">
+                    <a href="#"><img src="dist/img/logo_policy_expert.png" alt="Policy Expert" /></a>
+                </div>
+            </div>
+        </nav>
+        <section class="container" ui-view="mainsection">
+        </section>
+        <span us-spinner="{radius:30, width:8, length: 16}" spinner-key="global"></span>
+        <script src="dist/js/jquery.min.js"></script>
+        <script src="dist/js/lodash.min.js"></script>
+        <script src="dist/js/angular.min.js"></script>
+        <script src="dist/js/angular-ui-router.min.js"></script>
+        <script src="dist/js/ui-bootstrap.min.js"></script>
+        <script src="dist/js/ui-bootstrap-tpls.min.js"></script>
+        <script src="dist/js/spin.js"></script>
+        <script src="dist/js/angular-spinner.js"></script>
+        <script src="dist/js/angular-cookies.min.js"></script>
+        <script src="dist/js/markdown.js"></script>
+        <script src="dist/js/app.js"></script>
+        <script src="dist/js/templates.js"></script>
+        <script src="config.js"></script>
+    </body>
+</html>

@@ -1,0 +1,27 @@
+<div class="row" ng-controller="AddressController">
+    <div ng-hide="selectedAddress">
+        <div class="col-xs-6 col-md-4">
+            <input class="form-control" placeholder="Enter your postcode" ng-model="postcode">
+        </div>
+        <div class="col-xs-6 col-md-4">
+            <button ng-disabled="!postcode" class="form-control btn btn-default" ng-click="find()">
+                Find my address
+            </button>
+        </div>
+        <div class="col-md-8" ng-show="matches">
+            <select
+                ng-model="selectedAddress"
+                class="form-control"
+                ng-options="match.id as match.streetAddress for match in matches">
+                <option value='' disabled selected>Select...</option>
+            </select>
+        </div>
+    </div>
+    <div ng-show="selectedAddress">
+        <div class="col-xs-12">
+            {{displayAddress}}
+            <a href="" class="pull-right" ng-click="selectedAddress = null">Remove address</a>
+        </div>
+    </div>
+    <p ng-if="errors[question.id]" class="form-control-static text-danger">{{errors[question.id]}}</p>
+</div>

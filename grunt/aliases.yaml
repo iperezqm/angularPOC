@@ -1,0 +1,37 @@
+default:
+  - "build"
+  # - "test"
+
+build:
+  - "clean"
+  - "jshint"
+  - "jscs"
+  - "copy:config"
+  - "ngtemplates"
+  - "browserify"
+
+test_ci:
+  - "unit_ci"
+  - "e2e_ci"
+
+unit_ci:
+  - "mocha:ci"
+
+e2e_ci:
+  - "connect:e2e"
+  - "protractor:ci"
+
+test:
+  - "unit"
+  # - "e2e"
+
+unit:
+  - "mocha:dev"
+
+e2e:
+  - "connect:e2e"
+  - "protractor:dev"
+
+server:
+  - "configureProxies:e2e"
+  - "connect:e2e:keepalive"

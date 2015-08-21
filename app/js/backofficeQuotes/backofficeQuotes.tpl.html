@@ -1,0 +1,74 @@
+<div>
+    <div class="col-lg-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                What's covered
+            </div>
+            <div class="panel-body">
+                <div class="form-group">
+                    <p class="form-control-static">CID: {{CID}} - {{riskDescription}}</p>
+                    <a class="btn btn-primary">Amend enquiry</a>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Select a quote
+            </div>
+            <div class="panel-body">
+                <div ng-repeat="quote in quotes">
+                    <div class="clearfix" ng-if="!($index % 4)"></div>
+                    <div class="col-xs-3">
+                        <div class="panel panel-default text-center">
+                            <div class="panel-heading">
+                                {{quote.productName}}
+                            </div>
+                            <div class="list-group">
+                                <div class="list-group-item" ng-if="quote.quoted">
+                                    <img class="img-responsive center-block" src="{{quote.productData.logo[0].url}}">
+                                    <h3>{{quote.priceIncludingSelectedExtras.annual.money.amount | currency:'£':2}}</h3>
+                                    <h5>Monthly: {{quote.priceIncludingSelectedExtras.monthly.money.amount | currency:'£':2 }}</h5>
+                                </div>
+                                <div class="list-group-item" ng-if="!quote.quoted">
+                                    <div ng-if="quote.declineReasons">
+                                        <h4>Quote declined</h4>
+                                        <p ng-repeat="reason in quote.declineReasons">
+                                            {{reason}}
+                                        </p>
+                                        <p ng-if="quote.declineReasons.length === 0">
+                                            No decline reasons
+                                        </p>
+                                    </div>
+                                    <div ng-if="quote.message">
+                                        <h4>Error</h4>
+                                        <p>{{quote.message}}</p>
+                                    </div>
+                                </div>
+                                <div class="list-group-item" ng-if="quote.quoted">
+                                    <button class="btn btn-success">Select</button>
+                                </div>
+                                <div class="list-group-item" ng-if="quote.whatsCovered">
+                                    <h6 ng-repeat="cover in quote.whatsCovered | filter: {showWithQuote: true}">
+                                        <span class="glyphicon glyphicon-home"></span> {{cover.value}}
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Customize your quote
+            </div>
+            <div class="panel-body">
+                <div ng-repeat="question in questions">
+                    <question question="question" answers="answers"></question>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

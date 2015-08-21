@@ -1,0 +1,6 @@
+dist:
+  src: "./app/js/**/*.js"
+  dest: "./dist/js/app.js"
+  options:
+    browserifyOptions:
+        debug: true

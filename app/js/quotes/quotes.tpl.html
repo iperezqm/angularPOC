@@ -1,0 +1,55 @@
+<div>
+    <div class="col-md-4 col-md-push-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Customise your Policy
+            </div>
+            <div class="panel-body">
+                <div ng-repeat="question in questions">
+                    <question question="question" answers="answers"></question>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 col-md-pull-4">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Your quotes
+            </div>
+            <div class="panel-body row">
+                <div class="col-xs-3">
+                    Insurer
+                </div>
+                <div class="col-xs-3">
+                    Benefits
+                </div>
+                <div class="col-xs-6">
+                    Premium
+                </div>
+            </div>
+
+        </div>
+        <div class="panel panel-default" ng-repeat="quote in quotes">
+            <div class="panel-body row">
+                <div class="col-xs-3">
+                    <img src="{{quote.logo.url}}">
+                </div>
+                <div class="col-xs-3">
+                    <p ng-repeat="benefit in quote.info | filter: {showWithQuote: true}">
+                        <strong>{{benefit.text1}}</strong><br>
+                        {{benefit.value}}
+                    </p>
+                </div>
+                <div class="col-xs-3">
+                    <h2>{{quote.price.amount | currency : '£' : 2}}</h2>
+                    <p>Monthly: {{quote.monthlyPrice.amount| currency : '£' : 2}}<p>
+                </div>
+                <div class="col-xs-3">
+                    <button class="btn btn-success">
+                        Select &amp; continue
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

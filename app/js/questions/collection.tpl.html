@@ -1,0 +1,30 @@
+<div class="row" >
+    <div class="col-xs-12" ng-controller="CollectionController">
+        <div ng-if="answers">
+            <table class="table">
+                <tr>
+                    <th ng-repeat="summaryItem in question.summary || question.additionalParameters.summary">{{::summaryItem.title}}</th>
+                </tr>
+                <tr ng-repeat="answer in answers[question.id]">
+                    <td ng-repeat="summaryItem in $parent.question.summary">
+                        {{$parent.answer[summaryItem.question]}}
+                    </td>
+                </tr>
+            </table>
+            <button ng-if="!editing" class="btn btn-default btn-sm" ng-click="add()">Add</button>
+        </div>
+        <div ng-if="editing" class="panel panel-default">
+            <div class="panel-body">
+                <question
+                    ng-repeat="question in question.groups || question.collectionGroup"
+                    question="question"
+                    answers="$parent.currentAnswers">
+                </question>
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-default btn-sm" ng-click="save()">Save</button>
+                <button class="btn btn-default btn-sm" ng-click="cancel()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

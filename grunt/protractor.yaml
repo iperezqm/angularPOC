@@ -1,0 +1,21 @@
+options:
+  configFile: "protractor_conf.js"
+  keepAlive: false
+  noColor: false
+
+dev:
+  options:
+    args:
+      baseUrl: "http://localhost:<%= connect.e2e.options.port %>/"
+      capabilities:
+        browserName: "chrome"
+
+ci:
+  options:
+    args:
+      baseUrl: "http://localhost:<%= connect.e2e.options.port %>/"
+      capabilities:
+        browserName: "phantomjs"
+        phantomjs.binary.path: "./node_modules/phantomjs/lib/phantom/bin/phantomjs"
+      mochaOpts:
+        reporter: "mocha-teamcity-reporter"

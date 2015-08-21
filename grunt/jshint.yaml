@@ -1,0 +1,6 @@
+options:
+  jshintrc: true
+
+all:
+  - "./app/**/*.js"
+  - "./test/**/*.js"

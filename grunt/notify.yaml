@@ -1,0 +1,9 @@
+watchstart:
+  options:
+    title: 'watch'
+    message: 'triggered'
+
+watchsuccess:
+  options:
+    title: 'watch'
+    message: 'success'

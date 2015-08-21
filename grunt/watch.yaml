@@ -1,0 +1,32 @@
+options:
+  interrupt: false
+
+source:
+  files:
+    - "app/**/*"
+    - "index.html"
+  tasks:
+    - "notify:watchstart"
+    - "build"
+    - "test"
+    - "notify:watchsuccess"
+
+unit:
+  files:
+    - "test/unit/**/*.js"
+  tasks:
+    - "notify:watchstart"
+    - "jshint"
+    - "jscs"
+    - "unit"
+    - "notify:watchsuccess"
+
+e2e:
+  files:
+    - 'test/e2e/**/*.js'
+  tasks:
+    - "notify:watchstart"
+    - "jshint"
+    - "jscs"
+    - "e2e"
+    - "notify:watchsuccess"

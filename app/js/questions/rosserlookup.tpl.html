@@ -1,0 +1,59 @@
+<div ng-controller="RosserlookupController" class="panel panel-default">
+    <div class="panel-body">
+        <div class="input-group col-xs-6">
+            <span class="input-group-addon">@</span>
+            <input class="form-control" ng-model="email">
+            <span class="input-group-btn">
+                <button class="btn btn-success" ng-click="lookup()" ng-disabled="customerData">
+                    <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    Lookup
+                </button>
+            </span>
+        </div>
+        <div ng-if="customerData && !customer">
+            <p>We found the following matches in customer data</p>
+            <table class="table table-hover">
+                <tr>
+                    <th>CID</th>
+                    <th>Name</th>
+                    <th>Postcode</th>
+                    <th>Date Of Birth</th>
+                    <th>Marital Status</th>
+                    <th>Occupation</th>
+                    <th>Business Line</th>
+                    <th>Policy Number</th>
+                </tr>
+                <tr ng-repeat="customer in customerData" ng-click="select(customer)">
+                    <td>{{customer.cID}}</td>
+                    <td>{{customer.policyHolderName}}</td>
+                    <td>{{customer.postcode}}</td>
+                    <td>{{customer.dateOfBirth}}</td>
+                    <td>{{customer.maritalStatus}}</td>
+                    <td>{{customer.occupation}}</td>
+                    <td>{{customer.businessLine}}</td>
+                    <td>{{customer.policyNumber}}</td>
+                </tr>
+            </table>
+        </div>
+        <div ng-if="customer" class="panel panel-default">
+            <div class="panel-body">
+                <div class="col-xs-3">CID:</div>
+                <div class="col-xs-3">{{customer.cID}}</div>
+                <div class="col-xs-3">Marital Status:</div>
+                <div class="col-xs-3">{{customer.maritalStatus}}</div>
+                <div class="col-xs-3">Name:</div>
+                <div class="col-xs-3">{{customer.policyHolderName}}</div>
+                <div class="col-xs-3">Occupation:</div>
+                <div class="col-xs-3">{{customer.occupation}}</div>
+                <div class="col-xs-3">Postcode:</div>
+                <div class="col-xs-3">{{customer.postcode}}</div>
+                <div class="col-xs-3">Business Line:</div>
+                <div class="col-xs-3">{{customer.businessLine}}</div>
+                <div class="col-xs-3">Date Of Birth:</div>
+                <div class="col-xs-3">{{customer.dateOfBirth}}</div>
+                <div class="col-xs-3">Policy Number:</div>
+                <div class="col-xs-3">{{customer.policyNumber}}</div>
+            </div>
+        </div>
+    </div>
+</div>

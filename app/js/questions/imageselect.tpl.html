@@ -1,0 +1,21 @@
+<div ng-controller="ImageselectController">
+    <div class="row">
+        <div ng-repeat="option in (question.options || question.additionalParameters.images)">
+            <div class="col-xs-4">
+                <div class="panel" ng-class="{'panel-default': !option.selected, 'panel-success': option.selected}" ng-click="$parent.select(option)">
+                    <div class="panel-heading text-center">
+                        {{option.answer}}
+                    </div>
+                    <div class="panel-body text-center">
+                        <img class="img-responsive center-block" src="{{option.image.replace('.jpg', '.png').replace('0', '')}}">
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix" ng-if="($index % 3) == 2">
+            </div>
+        </div>
+    </div>
+    <p ng-if="errors[question.id]" class="form-control-static text-danger">{{errors[question.id]}}</p>
+    <question-groups groups="question.groups" trigger-id="question.id" answers="answers">
+    </question-groups>
+</div>

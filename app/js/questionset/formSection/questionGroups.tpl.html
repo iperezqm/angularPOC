@@ -1,0 +1,3 @@
+<div ng-repeat="group in groups" ng-if="$parent.answers[$parent.triggerId] === group.trigger">
+    <question ng-repeat="question in group.questions" question="::question" answers="$parent.answers"></question>
+</div>

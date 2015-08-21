@@ -1,0 +1,47 @@
+{
+  "name": "questionsetPOC",
+  "version": "0.0.1",
+  "description": "quickasaurus",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/qmetric/questionsetPOC.git"
+  },
+  "author": "QMetric",
+  "license": "private",
+  "bugs": {
+    "url": "https://github.com/qmetric/questionsetPOC/issues"
+  },
+  "homepage": "https://github.com/qmetric/questionsetPOC",
+  "devDependencies": {
+    "chai": "^2.2.0",
+    "chai-as-promised": "^4.3.0",
+    "extend": "^2.0.0",
+    "grunt-angular-templates": "^0.5.7",
+    "grunt-bower-task": "^0.4.0",
+    "grunt-browserify": "^3.7.0",
+    "grunt-cli": "^0.1.13",
+    "grunt-connect-proxy": "^0.2.0",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-connect": "^0.10.1",
+    "grunt-contrib-copy": "^0.8.0",
+    "grunt-contrib-jshint": "^0.11.1",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-jscs": "^1.6.0",
+    "grunt-mocha": "^0.4.12",
+    "grunt-notify": "^0.4.1",
+    "grunt-protractor-runner": "^2.0.0",
+    "http-rewrite-middleware": "^0.1.6",
+    "load-grunt-config": "^0.17.0",
+    "mocha": "^2.2.4",
+    "mocha-teamcity-reporter": "0.0.4",
+    "phantomjs": "^1.9.16",
+    "q": "^1.2.0",
+    "sinon": "^1.14.1",
+    "sinon-chai": "^2.7.0",
+    "time-grunt": "^1.1.0"
+  }
+}

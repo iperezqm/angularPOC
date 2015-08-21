@@ -1,0 +1,5 @@
+src:
+  - "app/js/**/*.js"
+  - "test/**/*.js"
+options:
+  config: ".jscsrc"

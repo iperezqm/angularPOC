@@ -1,0 +1,12 @@
+dev:
+  src:
+    - './test/unit/index.html'
+  options:
+    run: true
+
+ci:
+  src:
+    - './test/unit/index.html'
+  options:
+    run: true
+    reporter: 'mocha-teamcity-reporter'

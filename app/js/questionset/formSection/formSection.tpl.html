@@ -1,0 +1,10 @@
+<section class="panel panel-default">
+    <header class="panel-heading">
+        {{::(section.name || section.value)}}
+    </header>
+    <article class="panel-body">
+        <div ng-repeat="question in section.questions">
+            <question question="::question" answers="answers" errors="errors"></question>
+        </div>
+    </article>
+</section>
