@@ -7,7 +7,9 @@ angular.module('QMetric.internal.questionsetPOC').controller('BackofficeQuotesCo
         usSpinnerService.spin('global');
 
         backofficeUser.authenticate().then(function() {
-            backofficeSession.getQuotes($stateParams.sessionId, $stateParams.enquiryIndex).then(function(enquiry) {
+            backofficeSession.loadSession($stateParams.sessionId).then(function(session) {
+                return session.quoteEnquiryByIndex($stateParams.enquiryIndex);
+            }).then(function(enquiry) {
                 $scope.quotes = enquiry.quotes;
                 $scope.CID = enquiry.customerId;
                 $scope.riskDescription = enquiry.factValues.values.riskDescription;
@@ -15,17 +17,17 @@ angular.module('QMetric.internal.questionsetPOC').controller('BackofficeQuotesCo
                 $scope.questions = enquiry.businessLine.customisableQuestions;
                 $scope.answers = enquiry.applicationForm.answers;
 
-                var businessLine = enquiry.businessLineId;
-                var version = enquiry.applicationForm.version;
+                $scope.amendUrlPart = enquiry.sessionId + '/' + enquiry.enquiryIndex;
 
                 usSpinnerService.stop('global');
 
                 if (initializing) {
                     $scope.$watch('answers', function() {
                         if (!initializing) {
-                            backofficeSession.submitEnquiry(businessLine, version, $scope.answers).then(getQuotes).catch(function(error) {
-                                console.log(error);
-                            });
+                            enquiry.submitAnswers($scope.answers, enquiry.applicationForm.version)
+                                .then(getQuotes).catch(function(error) {
+                                    console.log(error);
+                                });
                         }
                         initializing = false;
                     }, true);

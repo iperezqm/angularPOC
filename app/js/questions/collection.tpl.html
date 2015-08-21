@@ -6,7 +6,7 @@
                     <th ng-repeat="summaryItem in question.summary || question.additionalParameters.summary">{{::summaryItem.title}}</th>
                 </tr>
                 <tr ng-repeat="answer in answers[question.id]">
-                    <td ng-repeat="summaryItem in $parent.question.summary">
+                    <td ng-repeat="summaryItem in $parent.question.summary || $parent.question.additionalParameters.summary">
                         {{$parent.answer[summaryItem.question]}}
                     </td>
                 </tr>
@@ -16,7 +16,7 @@
         <div ng-if="editing" class="panel panel-default">
             <div class="panel-body">
                 <question
-                    ng-repeat="question in question.groups || question.collectionGroup"
+                    ng-repeat="question in question.collectionGroup || question.groups"
                     question="question"
                     answers="$parent.currentAnswers">
                 </question>

@@ -10,7 +10,7 @@ angular.module('QMetric.internal.questionsetPOC').controller('QuestionsetControl
         if ($scope.provider) {
             backend = questionsetBackends[$scope.provider];
 
-            backend.getQuestionset($stateParams.businessLine).then(function(data) {
+            backend.getQuestionset($stateParams).then(function(data) {
                 $rootScope.enquiryId = data.enquiryId;
                 $scope.sections = data.sections;
                 $scope.answers = data.answers || {};
@@ -22,11 +22,13 @@ angular.module('QMetric.internal.questionsetPOC').controller('QuestionsetControl
         }
     });
 
-    var submitParameters = function() {
+    var submitData = function() {
         var parameters = {};
 
         if ($scope.provider === 'backoffice') {
             parameters.version = version;
+            parameters.sessionId = $stateParams.sessionId;
+            parameters.enquiryIndex = $stateParams.enquiryIndex;
         } else {
             parameters.enquiryId = $rootScope.enquiryId;
         }
@@ -39,10 +41,11 @@ angular.module('QMetric.internal.questionsetPOC').controller('QuestionsetControl
 
     $scope.submit = function() {
         usSpinnerService.spin('global');
-        backend.submit(submitParameters()).then(function(parameters) {
+        backend.submit(submitData()).then(function(parameters) {
             if ($scope.provider === 'backoffice') {
                 $location.url('/backoffice/quotes/' + parameters.sessionId + '/' + parameters.enquiryIndex);
             } else {
+                $location.path('/' + $stateParams.businessLine + '/' + $rootScope.enquiryId).replace();
                 $location.url('/quotes/' + $stateParams.businessLine + '/' + $rootScope.enquiryId + '/');
             }
         }).catch(function(failure) {

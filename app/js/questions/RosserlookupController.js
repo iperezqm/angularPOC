@@ -1,13 +1,18 @@
 'use strict';
 
 angular.module('QMetric.internal.questionsetPOC').controller('RosserlookupController', function($scope, $http, configuration) {
-    $scope.$watch('email', function() {
-        $scope.customeData = null;
-        $scope.customer = null;
-        $scope.answers[$scope.question.id] = {
-            email: $scope.email,
-            create: true
-        };
+    $scope.email = $scope.answers[$scope.question.id] && $scope.answers[$scope.question.id].email;
+    $scope.customer = $scope.answers[$scope.question.id] && $scope.answers[$scope.question.id].customerData;
+
+    $scope.$watch('email', function(newVal, oldVal) {
+        if (newVal !== oldVal) {
+            $scope.customerData = null;
+            $scope.customer = null;
+            $scope.answers[$scope.question.id] = {
+                email: $scope.email,
+                create: true
+            };
+        }
     });
 
     $scope.lookup = function() {

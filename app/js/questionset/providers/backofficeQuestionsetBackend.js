@@ -1,15 +1,23 @@
 'use strict';
 
 angular.module('QMetric.internal.questionsetPOC').service('backofficeQuestionsetBackend', function($q, $http, configuration, backofficeUser, backofficeSession) {
-    var getQuestionset = function(businessLine) {
+    var getQuestionset = function(data) {
+        var businessLineId = data.businessLine;
         var deferredQuestionset = $q.defer();
 
         backofficeUser.authenticate().then(function() {
-            $http({
+            var businessLinePromise = businessLineId ? $http({
                 method: 'GET',
-                url: configuration.backoffice.secured.questionset + '/' + businessLine
+                url: configuration.backoffice.secured.questionset + '/' + businessLineId
             }).then(function(response) {
-                var sections = response.data.formDefinition.sections;
+                return { businessLine: response.data };
+            }) : backofficeSession.loadSession(data.sessionId).then(function(session) {
+                return $q.resolve(session.getEnquiryByIndex(data.enquiryIndex));
+            });
+
+            businessLinePromise.then(function(tojunto) {
+                var businessLinexxx = tojunto.businessLine;
+                var sections = businessLinexxx.formDefinition.sections;
                 _.each(sections, function(section) {
                     section.questions = _.reject(section.questions, function(question) {
                         var tags = question.tags;
@@ -21,7 +29,8 @@ angular.module('QMetric.internal.questionsetPOC').service('backofficeQuestionset
                 });
                 deferredQuestionset.resolve({
                     sections: sections,
-                    version: response.data.publishedVersion
+                    version: businessLinexxx.publishedVersion,
+                    answers: tojunto.applicationForm && tojunto.applicationForm.answers
                 });
             }, function(failure) {
                 deferredQuestionset.reject(failure);
@@ -31,8 +40,16 @@ angular.module('QMetric.internal.questionsetPOC').service('backofficeQuestionset
         return deferredQuestionset.promise;
     };
 
-    var submit = function(parameters) {
-        return backofficeSession.submitEnquiry(parameters.businessLine, parameters.version, parameters.answers);
+    var submit = function(data) {
+        var enquiryPromise = data.businessLine ? backofficeSession.new().then(function(session) {
+            return session.newEnquiry(data.businessLine);
+        }) : backofficeSession.loadSession(data.sessionId).then(function(session) {
+            return $q.resolve(session.getEnquiryByIndex(data.enquiryIndex));
+        });
+
+        return enquiryPromise.then(function(enquiry) {
+            return enquiry.submitAnswers(data.answers, data.version);
+        });
     };
 
     return {

@@ -3,6 +3,8 @@
 angular.module('QMetric.internal.questionsetPOC').controller('QuotesController', function($scope, $http, configuration, $stateParams, usSpinnerService) {
     var initializing = true;
 
+    $scope.amendUrl = $stateParams.businessLine + '/' + $stateParams.enquiryId;
+
     var getQuotes = function() {
         usSpinnerService.spin('global');
         $http({

@@ -4,7 +4,7 @@
             <span class="input-group-addon">@</span>
             <input class="form-control" ng-model="email">
             <span class="input-group-btn">
-                <button class="btn btn-success" ng-click="lookup()" ng-disabled="customerData">
+                <button class="btn btn-success" ng-click="lookup()" ng-disabled="customer || customerData && customerData.length">
                     <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
                     Lookup
                 </button>

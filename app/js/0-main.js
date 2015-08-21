@@ -45,6 +45,15 @@ angular.module('QMetric.internal.questionsetPOC').config(function($stateProvider
         }
     });
 
+    $stateProvider.state('amendEnquiry', {
+        url: '/:businessLine/:enquiryId',
+        views: {
+            mainsection: {
+                templateUrl: 'uiviews/questionset.tpl.html'
+            }
+        }
+    });
+
     $stateProvider.state('questionset', {
         url: '/:businessLine',
         views: {
@@ -72,13 +81,22 @@ angular.module('QMetric.internal.questionsetPOC').config(function($stateProvider
         }
     });
 
+    $stateProvider.state('backofficeAmendEnquiry', {
+        url: '/backoffice/amendEnquiry/:sessionId/:enquiryIndex',
+        views: {
+            mainsection: {
+                templateUrl: 'uiviews/backofficeQuestionset.tpl.html'
+            }
+        }
+    });
+
     $stateProvider.state('404', {
         url: '*route',
         views: {
             mainsection: {
                 template: '<div class="jumbotron">' +
                     '<div class="container text-center">' +
-                    '<h1>Whoooops!</h1>' +
+                    '<h1>Mr Superman No Home</h1>' +
                     '<p>' +
                     '<img src="https://bobtheunicorn069.files.wordpress.com/2013/05/20130530-135206.jpg">' +
                     '<br>' +

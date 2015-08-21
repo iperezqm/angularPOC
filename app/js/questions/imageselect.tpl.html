@@ -2,7 +2,7 @@
     <div class="row">
         <div ng-repeat="option in (question.options || question.additionalParameters.images)">
             <div class="col-xs-4">
-                <div class="panel" ng-class="{'panel-default': !option.selected, 'panel-success': option.selected}" ng-click="$parent.select(option)">
+                <div class="panel" ng-class="{'panel-default': !isSelected(option), 'panel-success': isSelected(option)}" ng-click="$parent.select(option)">
                     <div class="panel-heading text-center">
                         {{option.answer}}
                     </div>
