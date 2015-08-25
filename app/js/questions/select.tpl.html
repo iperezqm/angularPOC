@@ -1,9 +1,9 @@
 <div>
-    <select ng-model="answers[question.id]" class="form-control">
+    <select name="question" ng-model="answers[question.id]" class="form-control" ng-required="question.mandatory">
         <option value='' disabled selected>Select...</option>
         <option ng-repeat="value in question.values">{{value}}</option>
     </select>
-    <p ng-if="errors[question.id]" class="form-control-static text-danger">{{errors[question.id]}}</p>
+    <error-messages></error-messages>
     <question-groups groups="question.groups" trigger-id="question.id" answers="answers">
     </question-groups>
 </div>

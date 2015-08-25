@@ -1,4 +1,5 @@
 <div ng-controller="ImageselectController">
+    <input type="hidden" name="question" ng-model="answers[question.id]" ng-required="question.mandatory">
     <div class="row">
         <div ng-repeat="option in (question.options || question.additionalParameters.images)">
             <div class="col-xs-4">
@@ -15,7 +16,7 @@
             </div>
         </div>
     </div>
-    <p ng-if="errors[question.id]" class="form-control-static text-danger">{{errors[question.id]}}</p>
+    <error-messages></error-messages>
     <question-groups groups="question.groups" trigger-id="question.id" answers="answers">
     </question-groups>
 </div>

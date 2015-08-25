@@ -1,4 +1,5 @@
 <div class="row" ng-controller="DropDownsController">
+    <input name="question" ng-model="answers[question.id]" ng-required="question.mandatory">
     <div class="col-sm-4">
         <select ng-model="day" class="form-control">
             <option value='' disabled selected>Day...</option>
@@ -20,4 +21,5 @@
     <div class="col-xs-12">
         <p ng-if="errors[question.id]" class="form-control-static text-danger">{{errors[question.id]}}</p>
     </div>
+    <error-messages></error-messages>
 </div>

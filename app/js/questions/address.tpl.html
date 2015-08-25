@@ -1,4 +1,5 @@
 <div class="row" ng-controller="AddressController">
+    <input type="hidden" name="question" ng-model="answers[question.id]" ng-required="question.mandatory">
     <div ng-hide="selectedAddress">
         <div class="col-xs-6 col-md-4">
             <input class="form-control" placeholder="Enter your postcode" ng-model="postcode">
@@ -23,5 +24,7 @@
             <a href="" class="pull-right" ng-click="selectedAddress = null">Remove address</a>
         </div>
     </div>
-    <p ng-if="errors[question.id]" class="form-control-static text-danger">{{errors[question.id]}}</p>
+    <div class="col-xs-12">
+        <error-messages></error-messages>
+    </div>
 </div>

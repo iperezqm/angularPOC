@@ -1,6 +1,8 @@
-<div class="form-group" ng-class="{'has-error': errors[question.id]}">
+<div class="form-group question">
     <label for="{{::question.id}}" ng-bind-html="::question.text | markdown"></label>
     <div popover="{{::question.helpText}}" popover-trigger="mouseenter" popover-title="Help" popover-placement="right" popover-append-to-body>
-        <ng-include src="'questions/' + question.type + '.tpl.html'"></ng-include>
+        <ng-form name="questionForm" ng-class="{'has-error': questionForm.question.$invalid && questionForm.question.$touched}" >
+            <ng-include src="'questions/' + question.type + '.tpl.html'"></ng-include>
+        </ng-form>
     </div>
 </div>

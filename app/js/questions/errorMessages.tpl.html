@@ -1,0 +1,5 @@
+<p ng-if="questionForm.question.$invalid && (questionForm.question.$touched || questionForm.question.$dirty)" ng-messages="questionForm.question.$error" class="form-control-static text-danger">
+    <span class="glyphicon glyphicon-chevron-up"></span>
+    <span ng-message="server">{{errors[question.id]}}</span>
+    <span ng-message="required">No answer given</span>
+</p>

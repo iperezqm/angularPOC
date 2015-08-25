@@ -1,7 +1,9 @@
-<p class="input-group col-md-6" ng-controller="CalendarSelectController">
-    <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="selectedDate" is-open="opened" close-text="Close">
-    <span class="input-group-btn">
-    <button type="button" class="btn btn-default" ng-click="opened=true"><i class="glyphicon glyphicon-calendar"></i></button>
-    </span>
-    <p ng-if="errors[question.id]" class="form-control-static text-danger">{{errors[question.id]}}</p>
-</p>
+<div>
+    <p class="input-group col-md-6" ng-controller="CalendarSelectController">
+        <input name="question" type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="selectedDate" is-open="opened" close-text="Close" ng-required="question.mandatory">
+        <span class="input-group-btn">
+        <button type="button" class="btn btn-default" ng-click="opened=true"><i class="glyphicon glyphicon-calendar"></i></button>
+        </span>
+    </p>
+    <error-messages></error-messages>
+</div>

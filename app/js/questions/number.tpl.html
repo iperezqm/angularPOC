@@ -1,5 +1,4 @@
 <div>
-    <input class="form-control" ng-model="answers[question.id]">
-    </input>
-    <p ng-if="errors[question.id]" class="form-control-static text-danger">{{errors[question.id]}}</p>
+    <input name="question" class="form-control" ng-model="answers[question.id]" ng-required="question.mandatory">
+    <error-messages></error-messages>
 </div>

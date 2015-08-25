@@ -1,6 +1,6 @@
 <div ng-controller="ReferrerController">
-    <select ng-model="answers[question.id]" class="form-control" ng-options="code as name for (code, name) in referrers">
+    <select name="question" ng-model="answers[question.id]" class="form-control" ng-options="code as name for (code, name) in referrers" ng-required="question.mandatory">
         <option value='' disabled selected>Select...</option>
     </select>
-    <p ng-if="errors[question.id]" class="form-control-static text-danger">{{errors[question.id]}}</p>
+    <error-messages></error-messages>
 </div>

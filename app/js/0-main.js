@@ -1,6 +1,12 @@
 'use strict';
 
-angular.module('QMetric.internal.questionsetPOC', ['ui.router', 'ui.bootstrap', 'angularSpinner', 'ngCookies'], function($locationProvider, $tooltipProvider) {
+angular.module('QMetric.internal.questionsetPOC', [
+    'ui.router',
+    'ui.bootstrap',
+    'angularSpinner',
+    'ngCookies',
+    'ngMessages'
+], function($locationProvider, $tooltipProvider) {
     $locationProvider.html5Mode({
         enabled: false,
         requireBase: false
@@ -36,6 +42,33 @@ angular.module('QMetric.internal.questionsetPOC').config(function($stateProvider
         }
     });
 
+    $stateProvider.state('backofficeQuotes', {
+        url: '/backoffice/quotes/:sessionId/:enquiryIndex',
+        views: {
+            mainsection: {
+                templateUrl: 'uiviews/backofficeQuotes.tpl.html'
+            }
+        }
+    });
+
+    $stateProvider.state('backofficeAmendEnquiry', {
+        url: '/backoffice/amendEnquiry/:sessionId/:enquiryIndex',
+        views: {
+            mainsection: {
+                templateUrl: 'uiviews/backofficeQuestionset.tpl.html'
+            }
+        }
+    });
+
+    $stateProvider.state('backofficeQuestionset', {
+        url: '/backoffice/:businessLine',
+        views: {
+            mainsection: {
+                templateUrl: 'uiviews/backofficeQuestionset.tpl.html'
+            }
+        }
+    });
+
     $stateProvider.state('quotes', {
         url: '/quotes/:businessLine/:enquiryId/:sequence',
         views: {
@@ -59,33 +92,6 @@ angular.module('QMetric.internal.questionsetPOC').config(function($stateProvider
         views: {
             mainsection: {
                 templateUrl: 'uiviews/questionset.tpl.html'
-            }
-        }
-    });
-
-    $stateProvider.state('backofficeQuotes', {
-        url: '/backoffice/quotes/:sessionId/:enquiryIndex',
-        views: {
-            mainsection: {
-                templateUrl: 'uiviews/backofficeQuotes.tpl.html'
-            }
-        }
-    });
-
-    $stateProvider.state('backofficeQuestionset', {
-        url: '/backoffice/:businessLine',
-        views: {
-            mainsection: {
-                templateUrl: 'uiviews/backofficeQuestionset.tpl.html'
-            }
-        }
-    });
-
-    $stateProvider.state('backofficeAmendEnquiry', {
-        url: '/backoffice/amendEnquiry/:sessionId/:enquiryIndex',
-        views: {
-            mainsection: {
-                templateUrl: 'uiviews/backofficeQuestionset.tpl.html'
             }
         }
     });

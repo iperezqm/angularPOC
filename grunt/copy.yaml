@@ -13,6 +13,7 @@ config:
         - "./bower_components/spin.js/spin.js"
         - "./bower_components/angular-spinner/angular-spinner.js"
         - "./bower_components/angular-cookies/angular-cookies.min.js"
+        - "./bower_components/angular-messages/angular-messages.min.js"
       dest: "./dist/js"
       filter: "isFile"
     - expand: true

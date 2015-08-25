@@ -40,20 +40,28 @@ angular.module('QMetric.internal.questionsetPOC').controller('QuestionsetControl
     };
 
     $scope.submit = function() {
-        usSpinnerService.spin('global');
-        backend.submit(submitData()).then(function(parameters) {
-            if ($scope.provider === 'backoffice') {
-                $location.url('/backoffice/quotes/' + parameters.sessionId + '/' + parameters.enquiryIndex);
-            } else {
-                $location.path('/' + $stateParams.businessLine + '/' + $rootScope.enquiryId).replace();
-                $location.url('/quotes/' + $stateParams.businessLine + '/' + $rootScope.enquiryId + '/');
-            }
-        }).catch(function(failure) {
-            usSpinnerService.stop('global');
-            $scope.errors = failure.errors;
-            if (failure.exception) {
-                console.log(failure.exception);
-            }
-        });
+        if ($scope.questionset.$valid) {
+            usSpinnerService.spin('global');
+            backend.submit(submitData()).then(function(parameters) {
+                if ($scope.provider === 'backoffice') {
+                    $location.url('/backoffice/quotes/' + parameters.sessionId + '/' + parameters.enquiryIndex);
+                } else {
+                    $location.path('/' + $stateParams.businessLine + '/' + $rootScope.enquiryId).replace();
+                    $location.url('/quotes/' + $stateParams.businessLine + '/' + $rootScope.enquiryId + '/');
+                }
+            }).catch(function(failure) {
+                usSpinnerService.stop('global');
+                $scope.errors = failure.errors;
+                if (failure.exception) {
+                    console.log(failure.exception);
+                }
+            });
+        } else {
+            angular.forEach($scope.questionset.$error, function(errorType) {
+                angular.forEach(errorType, function(questionForm) {
+                    questionForm.question.$setTouched();
+                });
+            });
+        }
     };
 });
