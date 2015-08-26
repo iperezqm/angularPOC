@@ -1,5 +1,5 @@
 <div class="row" ng-controller="DropDownsController">
-    <input name="question" ng-model="answers[question.id]" ng-required="question.mandatory">
+    <input type="hidden" name="question" ng-model="answers[question.id]" ng-required="question.mandatory">
     <div class="col-sm-4">
         <select ng-model="day" class="form-control">
             <option value='' disabled selected>Day...</option>

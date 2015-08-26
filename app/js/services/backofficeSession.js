@@ -7,6 +7,20 @@ angular.module('QMetric.internal.questionsetPOC').service('backofficeSession', f
             angular.extend(thisEnquiry, enquiryData);
             var ENQUIRY_ENDPOINT = SESSIONS_ENDPOINT + '/' + thisSession.id + '/enquiries' + '/' + this.enquiryIndex;
 
+            angular.forEach(enquiryData.quotes, function(quote) {
+                angular.extend(quote, {
+                    getDetails: function() {
+                        if (!quote.details) {
+                            $http.get(ENQUIRY_ENDPOINT + '/quoteDetail/' + quote.id).then(function(response) {
+                                angular.extend(quote, {
+                                    details: response.data
+                                });
+                            });
+                        }
+                    }
+                });
+            });
+
             this.submitAnswers = function(answers, version) {
                 return $http({
                     method: 'PUT',
@@ -94,6 +108,44 @@ angular.module('QMetric.internal.questionsetPOC').service('backofficeSession', f
             return thisSession.getEnquiryByIndex(enquiryIndex).quote().then(function(updatedEnquiry) {
                 thisSession.enquiries[enquiryIndex - 1] = updatedEnquiry;
                 return $q.resolve(updatedEnquiry);
+            });
+        };
+
+        this.addToBasket = function(enquiryIndex, product) {
+            var basketUrl = SESSIONS_ENDPOINT + '/' + thisSession.id + '/basket';
+            return $http({
+                method: 'POST',
+                url: basketUrl,
+                data: {
+                    enquiryIndex: enquiryIndex,
+                    product: product,
+                    sequence: thisSession.sequenceNumber
+                }
+            }).then(thisSession.updateSequenceNumber).then(function() {
+                return $http.get(basketUrl);
+            }).then(function(response) {
+                angular.extend(thisSession.basket, response.data);
+            });
+        };
+
+        this.purchaseWithCard = function() {
+            return $http({
+                method: 'POST',
+                url: SESSIONS_ENDPOINT + '/' + thisSession.id + '/purchaseWithCard',
+                data: {
+                    sequence: thisSession.sequenceNumber
+                }
+            }).then(thisSession.updateSequenceNumber).then(function(response) {
+                var payment = response.data.paymentRequest;
+                var paymentParameters = [];
+                //jshint -W107
+                payment.parameters.nbx_success_redirect_url = payment.parameters.nbx_success_redirect_url.replace('/sales?session=', '/poc/redirect-to-orders.html#/backoffice/orders/').replace('&order=', '/');
+                //jshint +W107
+                angular.forEach(payment.parameters, function(value, key) {
+                    paymentParameters.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
+                });
+
+                return $q.resolve(payment.paymentUrl + '?' + paymentParameters.join('&'));
             });
         };
     };

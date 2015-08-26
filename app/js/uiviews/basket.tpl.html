@@ -1,0 +1,62 @@
+<div class="row" ng-controller="BasketController">
+    <div class="col-xs-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">How do you want to pay?</div>
+            <div class="panel-body">
+                <div class="col-xs-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="text-center">One payment of</h3>
+                            <h2 class="text-center">{{basket.total.money.amount | currency:'£':2}}</h2>
+                        </div>
+                        <div class="panel-body">
+                            <h4>Card options:</h4>
+                            <span class="glyphicon glyphicon-ok"></span> Pay with new card
+                        </div>
+                        <div class="panel-body">
+                            <button class="btn btn-success pull-right" ng-click="annual()">Pay annual now</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <h3 class="text-center">Monthly payments of</h3>
+                            <h2 class="text-center">{{basket.directDebitDetails.monthlyAmount.money.amount | currency:'£':2}}</h2>
+                        </div>
+                        <div class="panel-body">
+                            <h4>Payment breakdown:</h4>
+                            <table class="table">
+                                <tr>
+                                    <td>Initial payment of</td>
+                                    <td class="text-right">{{basket.directDebitDetails.initialAmount.money.amount | currency:'£':2}}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{basket.directDebitDetails.directDebitRates.numberOfPayments}} installments of</td>
+                                    <td class="text-right">{{basket.directDebitDetails.monthlyAmount.money.amount | currency:'£':2}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Total payable</td>
+                                    <td class="text-right">{{basket.directDebitDetails.totalPayable.money.amount | currency:'£':2}}</td>
+                                </tr>
+                            </table>
+                            <p>
+                                Includes {{basket.directDebitDetails.directDebitRates.interestPercentage}}% surcharge<br>
+                                ({{basket.directDebitDetails.directDebitRates.apr}}% representative APR) of {{basket.directDebitDetails.interestAmount.money.amount | currency:'£':2}}
+                            </p>
+                        </div>
+                        <div class="panel-body">
+                            <button class="btn btn-success pull-right" ng-click="directDebit">Pay with new Direct Debit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">How do you want to pay?</div>
+            <div class="panel-body">
+                <iframe style="border:0; width: 100%; height: 900px;" ng-src="{{paymentUrl}}"></iframe>
+            </div>
+        </div>
+    </div>
+</div>

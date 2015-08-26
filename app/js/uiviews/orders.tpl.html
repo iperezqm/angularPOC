@@ -1,0 +1,32 @@
+<div class="panel panel-default" ng-controller="OrdersController">
+    <div class="panel-heading">
+        Orders
+    </div>
+    <div class="panel-body">
+        <div ng-repeat="order in orders">
+            <h3>Order {{$index+1}}</h3>
+            <table class="table" ng-show="order.purchased">
+                <tr>
+                    <th>Product</th>
+                    <th>Premium</th>
+                    <th>Policy</th>
+                    <th>Payment</th>
+                    <th>CustomerId</th>
+                </tr>
+                <tr ng-repeat="policy in order.policies">
+                    <td>{{$parent.$parent.productName(order, policy)}}</td>
+                    <td>{{policy.premium.money.amount | currency:'£':2}}</td>
+                    <td>
+                        <a ui-sref="backofficePolicyDetails({ policyId: policy.id })">
+                            {{policy.number}}
+                        </a>
+                    </td>
+                    <td>{{policy.paymentMethod.paymentType}}</td>
+                    <td>{{$parent.$parent.customerId(order, policy)}}</td>
+                </tr>
+            </table>
+            <div>Total amount: {{order.total.money.amount | currency:'£':2}}</div>
+            <div>Status: <span ng-if="order.purchased">PURCHASED</span><span class="text-danger" ng-if="!order.purchased">NOT PURCHASED</span></div>
+        </div>
+    </div>
+</div>

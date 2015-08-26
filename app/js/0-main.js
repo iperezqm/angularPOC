@@ -42,6 +42,33 @@ angular.module('QMetric.internal.questionsetPOC').config(function($stateProvider
         }
     });
 
+    $stateProvider.state('backofficeBasket', {
+        url: '/backoffice/basket/:sessionId',
+        views: {
+            mainsection: {
+                templateUrl: 'uiviews/basket.tpl.html'
+            }
+        }
+    });
+
+    $stateProvider.state('backofficePolicyDetails', {
+        url: '/backoffice/policy-details/:policyId',
+        views: {
+            mainsection: {
+                templateUrl: 'uiviews/backofficePolicyDetails.tpl.html'
+            }
+        }
+    });
+
+    $stateProvider.state('backofficeOrders', {
+        url: '/backoffice/orders/:sessionId/:orderId',
+        views: {
+            mainsection: {
+                templateUrl: 'uiviews/orders.tpl.html'
+            }
+        }
+    });
+
     $stateProvider.state('backofficeQuotes', {
         url: '/backoffice/quotes/:sessionId/:enquiryIndex',
         views: {

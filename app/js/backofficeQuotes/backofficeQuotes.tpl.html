@@ -15,7 +15,7 @@
             <div class="panel-heading">
                 Select a quote
             </div>
-            <div class="panel-body">
+            <div class="panel-body" class="col-xs-12">
                 <div ng-repeat="quote in quotes">
                     <div class="clearfix" ng-if="!($index % 4)"></div>
                     <div class="col-xs-3">
@@ -44,17 +44,86 @@
                                         <p>{{quote.message}}</p>
                                     </div>
                                 </div>
-                                <div class="list-group-item" ng-if="quote.quoted">
-                                    <button class="btn btn-success">Select</button>
+                                <div class="list-group-item" ng-show="quote.quoted">
+                                    <button class="btn btn-success" ng-click="$parent.select(quote)">Select</button>
                                 </div>
-                                <div class="list-group-item" ng-if="quote.whatsCovered">
-                                    <h6 ng-repeat="cover in quote.whatsCovered | filter: {showWithQuote: true}">
-                                        <span class="glyphicon glyphicon-home"></span> {{cover.value}}
-                                    </h6>
+                                <div class="list-group-item" ng-if="!quote.quoted">
+                                </div>
+                                <div class="list-group-item" ng-show="quote.whatsCovered">
+                                    <span class="small" ng-repeat="cover in quote.whatsCovered | filter: {showWithQuote: true}">
+                                        <span class="{{$parent.coverIcon(cover)}}"></span> {{cover.value}}
+                                    </span>
+                                </div>
+                                <div class="list-group-item" ng-if="!quote.whatsCovered">
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="quoteDetails panel panel-success" ng-show="selectedQuote">
+            <div class="panel-body">
+                <div class="row">
+                    <div class="col-xs-8">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Cover provided</div>
+                            <table class="table">
+                                <tr>
+                                    <td></td>
+                                    <td>Buildings</td>
+                                    <td>Contents</td>
+                                </tr>
+                                <tr>
+                                    <td>{{selectedQuote.details.excess[0].label}}</td>
+                                    <td>{{selectedQuote.details.excess[0].amount | currency:'£':2}}</td>
+                                    <td>{{selectedQuote.details.excess[2].amount | currency:'£':2}}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{selectedQuote.details.excess[1].label}}</td>
+                                    <td>{{selectedQuote.details.excess[1].amount | currency:'£':2}}</td>
+                                    <td>{{selectedQuote.details.excess[3].amount | currency:'£':2}}</td>
+                                </tr>
+                                <tr>
+                            </table>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Endorsements</div>
+                            <div class="panel-body">
+                                Your policy has {{selectedQuote.details.endorsements.length}} endorsements.
+                                <blockquote class="small" ng-repeat="endorsement in selectedQuote.details.endorsements" style="white-space: pre-wrap">{{endorsement.description}}</blockquote>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Policy documents</div>
+                            <div class="panel-body">
+                                <span ng-repeat="(label, document) in selectedQuote.details.staticDocuments">
+                                    <a ng-href="{{document}}">
+                                        <span class="label label-primary">
+                                            <span class="glyphicon glyphicon-file"></span>
+                                            {{label}}
+                                        </span>
+                                    </a>
+                                    <span>&nbsp;</span>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">Cover information</div>
+                            <table class="table">
+                                <tr class="small" ng-repeat="cover in selectedQuote.whatsCovered">
+                                    <td><span class="{{$parent.coverIcon(cover)}}"></span></td>
+                                    <td>{{cover.text1}}</td>
+                                    <td>{{cover.value}}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="pull-right">
+                    <button class="btn btn-success pull-right" ng-click="addToBasket()">Add to basket</button>
                 </div>
             </div>
         </div>
