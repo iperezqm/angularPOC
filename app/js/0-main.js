@@ -17,9 +17,14 @@ angular.module('QMetric.internal.questionsetPOC', [
     });
 });
 
-angular.module('QMetric.internal.questionsetPOC').config(function($stateProvider) {
+angular.module('QMetric.internal.questionsetPOC').config(function($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.when('', function($state) {
+        $state.go('homepage', {}, { location: 'replace' });
+        return true;
+    });
+
     $stateProvider.state('homepage', {
-        url: '',
+        url: '/',
         views: {
             mainsection: {
                 template: '<div class="jumbotron">' +
@@ -28,16 +33,26 @@ angular.module('QMetric.internal.questionsetPOC').config(function($stateProvider
                     '<p>Angular + Bootstrap PoC</p>' +
                     '<h3>Website:</h3>' +
                     '<p>' +
-                    '<a class="btn btn-primary btn-lg" href="#/home2" role="button">Home</a> ' +
+                    '<a class="btn btn-primary btn-lg" href="#/Home" role="button">Home</a> ' +
                     '<a class="btn btn-primary btn-lg" href="#/Car" role="button">Car</a>' +
                     '</p>' +
                     '<h3>Backoffice:</h3>' +
                     '<p>' +
-                    '<a class="btn btn-primary btn-lg" href="#/backoffice/home2" role="button">Home</a> ' +
-                    '<a class="btn btn-primary btn-lg" href="#/backoffice/Car" role="button">Car</a>' +
+                    '<a class="btn btn-primary btn-lg" href="#/backoffice/Home" role="button">Home</a> ' +
+                    '<a class="btn btn-primary btn-lg" href="#/backoffice/Car" role="button">Car</a> ' +
+                    '<a class="btn btn-primary btn-lg" href="#/backoffice/search" role="button">Search</a>' +
                     '</p>' +
                     '</div>' +
                     '</div>'
+            }
+        }
+    });
+
+    $stateProvider.state('backofficeSearch', {
+        url: '/backoffice/search?query',
+        views: {
+            mainsection: {
+                templateUrl: 'uiviews/backoffice/search.tpl.html'
             }
         }
     });
@@ -46,16 +61,16 @@ angular.module('QMetric.internal.questionsetPOC').config(function($stateProvider
         url: '/backoffice/basket/:sessionId',
         views: {
             mainsection: {
-                templateUrl: 'uiviews/basket.tpl.html'
+                templateUrl: 'uiviews/backoffice/basket.tpl.html'
             }
         }
     });
 
-    $stateProvider.state('backofficePolicyDetails', {
-        url: '/backoffice/policy-details/:policyId',
+    $stateProvider.state('backofficePolicyDetail', {
+        url: '/backoffice/policy-detail/:policyId',
         views: {
             mainsection: {
-                templateUrl: 'uiviews/backofficePolicyDetails.tpl.html'
+                templateUrl: 'uiviews/backoffice/policyDetails.tpl.html'
             }
         }
     });
@@ -64,7 +79,7 @@ angular.module('QMetric.internal.questionsetPOC').config(function($stateProvider
         url: '/backoffice/orders/:sessionId/:orderId',
         views: {
             mainsection: {
-                templateUrl: 'uiviews/orders.tpl.html'
+                templateUrl: 'uiviews/backoffice/orders.tpl.html'
             }
         }
     });
@@ -73,7 +88,7 @@ angular.module('QMetric.internal.questionsetPOC').config(function($stateProvider
         url: '/backoffice/quotes/:sessionId/:enquiryIndex',
         views: {
             mainsection: {
-                templateUrl: 'uiviews/backofficeQuotes.tpl.html'
+                templateUrl: 'uiviews/backoffice/quotes.tpl.html'
             }
         }
     });
@@ -82,7 +97,7 @@ angular.module('QMetric.internal.questionsetPOC').config(function($stateProvider
         url: '/backoffice/amendEnquiry/:sessionId/:enquiryIndex',
         views: {
             mainsection: {
-                templateUrl: 'uiviews/backofficeQuestionset.tpl.html'
+                templateUrl: 'uiviews/backoffice/questionset.tpl.html'
             }
         }
     });
@@ -91,7 +106,7 @@ angular.module('QMetric.internal.questionsetPOC').config(function($stateProvider
         url: '/backoffice/:businessLine',
         views: {
             mainsection: {
-                templateUrl: 'uiviews/backofficeQuestionset.tpl.html'
+                templateUrl: 'uiviews/backoffice/questionset.tpl.html'
             }
         }
     });
@@ -100,7 +115,7 @@ angular.module('QMetric.internal.questionsetPOC').config(function($stateProvider
         url: '/quotes/:businessLine/:enquiryId/:sequence',
         views: {
             mainsection: {
-                templateUrl: 'uiviews/quotes.tpl.html'
+                templateUrl: 'uiviews/website/quotes.tpl.html'
             }
         }
     });
@@ -109,7 +124,7 @@ angular.module('QMetric.internal.questionsetPOC').config(function($stateProvider
         url: '/:businessLine/:enquiryId',
         views: {
             mainsection: {
-                templateUrl: 'uiviews/questionset.tpl.html'
+                templateUrl: 'uiviews/website/questionset.tpl.html'
             }
         }
     });
@@ -118,7 +133,7 @@ angular.module('QMetric.internal.questionsetPOC').config(function($stateProvider
         url: '/:businessLine',
         views: {
             mainsection: {
-                templateUrl: 'uiviews/questionset.tpl.html'
+                templateUrl: 'uiviews/website/questionset.tpl.html'
             }
         }
     });
@@ -127,15 +142,8 @@ angular.module('QMetric.internal.questionsetPOC').config(function($stateProvider
         url: '*route',
         views: {
             mainsection: {
-                template: '<div class="jumbotron">' +
-                    '<div class="container text-center">' +
-                    '<h1>Mr Superman No Home</h1>' +
-                    '<p>' +
-                    '<img src="https://bobtheunicorn069.files.wordpress.com/2013/05/20130530-135206.jpg">' +
-                    '<br>' +
-                    '<a class="btn btn-primary btn-lg" href="#" role="button">Go Home!</a> ' +
-                    '</p>' +
-                    '</div>' +
+                template: '<div class="container text-center">' +
+                    '<img src="https://http.cat/404.jpg">' +
                     '</div>'
             }
         }

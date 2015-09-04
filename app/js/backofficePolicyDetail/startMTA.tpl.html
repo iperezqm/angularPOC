@@ -1,0 +1,19 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss()"><span>&times;</span></button>
+    <span class="modal-title" id="myModalLabel">Start MTA process</span>
+</div>
+<div class="modal-body">
+    <div class="form-horizontal">
+        <div class="form-group">
+            <label class="control-label col-xs-4">Amendment type:</label>
+            <div class="col-xs-8">
+                <select class="form-control" ng-model="selectedMTA" ng-options="adjustment.description for (key, adjustment) in $parent.adjustments">
+                    <option disabled selected value=''>Select...</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <button type="button" ng-disabled="!selectedMTA" class="btn btn-success">Amend policy</button>
+</div>

@@ -15,9 +15,9 @@
                 </tr>
                 <tr ng-repeat="policy in order.policies">
                     <td>{{$parent.$parent.productName(order, policy)}}</td>
-                    <td>{{policy.premium.money.amount | currency:'£':2}}</td>
+                    <td>{{policy.premium | qmgMoney}}</td>
                     <td>
-                        <a ui-sref="backofficePolicyDetails({ policyId: policy.id })">
+                        <a ui-sref="backofficePolicyDetail({ policyId: policy.id })">
                             {{policy.number}}
                         </a>
                     </td>
@@ -25,7 +25,7 @@
                     <td>{{$parent.$parent.customerId(order, policy)}}</td>
                 </tr>
             </table>
-            <div>Total amount: {{order.total.money.amount | currency:'£':2}}</div>
+            <div>Total amount: {{order.total | qmgMoney}}</div>
             <div>Status: <span ng-if="order.purchased">PURCHASED</span><span class="text-danger" ng-if="!order.purchased">NOT PURCHASED</span></div>
         </div>
     </div>

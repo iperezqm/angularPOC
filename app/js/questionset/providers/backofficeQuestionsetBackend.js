@@ -1,23 +1,20 @@
 'use strict';
 
-angular.module('QMetric.internal.questionsetPOC').service('backofficeQuestionsetBackend', function($q, $http, configuration, backofficeUser, backofficeSession) {
+angular.module('QMetric.internal.questionsetPOC').service('backofficeQuestionsetBackend', function($q, configuration, backofficeUser, backofficeSession, backofficeBusinessLine) {
     var getQuestionset = function(data) {
         var businessLineId = data.businessLine;
         var deferredQuestionset = $q.defer();
 
         backofficeUser.authenticate().then(function() {
-            var businessLinePromise = businessLineId ? $http({
-                method: 'GET',
-                url: configuration.backoffice.secured.questionset + '/' + businessLineId
-            }).then(function(response) {
-                return { businessLine: response.data };
+            var getEnquiry = businessLineId ? backofficeBusinessLine.load(businessLineId).then(function(businessLine) {
+                return { businessLine: businessLine };
             }) : backofficeSession.loadSession(data.sessionId).then(function(session) {
                 return $q.resolve(session.getEnquiryByIndex(data.enquiryIndex));
             });
 
-            businessLinePromise.then(function(tojunto) {
-                var businessLinexxx = tojunto.businessLine;
-                var sections = businessLinexxx.formDefinition.sections;
+            getEnquiry.then(function(enquiry) {
+                var businessLine = enquiry.businessLine;
+                var sections = businessLine.formDefinition.sections;
                 _.each(sections, function(section) {
                     section.questions = _.reject(section.questions, function(question) {
                         var tags = question.tags;
@@ -29,8 +26,8 @@ angular.module('QMetric.internal.questionsetPOC').service('backofficeQuestionset
                 });
                 deferredQuestionset.resolve({
                     sections: sections,
-                    version: businessLinexxx.publishedVersion,
-                    answers: tojunto.applicationForm && tojunto.applicationForm.answers
+                    version: businessLine.publishedVersion,
+                    answers: enquiry.applicationForm && enquiry.applicationForm.answers
                 });
             }, function(failure) {
                 deferredQuestionset.reject(failure);

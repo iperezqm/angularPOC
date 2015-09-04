@@ -1,0 +1,449 @@
+<div ng-controller="BackofficePolicyDetailController">
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-xs-6">
+                    Policy status
+                    <div class="panel panel-default">
+                        <div class="panel-body"></div>
+                    </div>
+                </div>
+                <div class="col-xs-6">
+                    Policy actions
+                    <div class="row">
+                        <div class="col-xs-10">
+                            <select class="form-control" ng-model="selectedAction" ng-options="action.label disable when !action.isEnabled() for action in actions">
+                                <option disabled selected value=''>Please select...</option>
+                            </select>
+                        </div>
+                        <div class="col-xs-2">
+                            <button class="form-control btn btn-default" ng-click="selectedAction.action()">Go!</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Policy Information</div>
+        <div class="panel-body">
+            <tabset>
+                <tab heading="Policy information">
+                    <div class="col-xs-5">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-xs-4 control-label">Product:</label>
+                                <div class="col-xs-8">
+                                    <p class="form-control-static">{{::$parent.$parent.details.productName}}</p>
+                                </div>
+                                <label class="col-xs-4 control-label">Policy number:</label>
+                                <div class="col-xs-8">
+                                    <p class="form-control-static">{{::$parent.$parent.details.number}}</p>
+                                </div>
+                                <label class="col-xs-4 control-label">Status:</label>
+                                <div class="col-xs-8">
+                                    <p class="form-control-static" ng-class="{'text-danger': $parent.$parent.details.isCancelled}">
+                                        {{::$parent.$parent.details.status}}
+                                        <span ng-if="$parent.$parent.details.isCancelled">
+                                            on {{::$parent.$parent.details.cancellationDate | qmgDate}}
+                                        </span>
+                                    </p>
+                                </div>
+                                <label class="col-xs-4 control-label">Business line:</label>
+                                <div class="col-xs-8">
+                                    <p class="form-control-static">{{$parent.$parent.details.businessLineDetails.name || $parent.$parent.details.businessLine}}</p>
+                                </div>
+                                <label class="col-xs-4 control-label">Risk insured:</label>
+                                <div class="col-xs-8">
+                                    <p class="form-control-static">{{::$parent.$parent.details.riskInsured}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-2">
+                        <img class="img-responsive center-block" src="{{::$parent.$parent.product.productData.logo[0].url}}">
+                    </div>
+                    <div class="col-xs-5">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-xs-4 control-label">Cover level:</label>
+                                <div class="col-xs-8">
+                                    <p class="form-control-static">{{::$parent.$parent.details.coverLevel}}</p>
+                                </div>
+                                <label class="col-xs-4 control-label">Cover dates:</label>
+                                <div class="col-xs-8">
+                                    <p class="form-control-static">
+                                        {{::$parent.$parent.details.startDate | qmgDate}} to {{::$parent.$parent.details.expireDate | qmgDate}}
+                                        (HAS <strong ng-if="!$parent.parent.details.isStarted">NOT </strong>INCEPTED)
+                                    </p>
+                                </div>
+                                <label class="col-xs-4 control-label">Purchase date:</label>
+                                <div class="col-xs-8">
+                                    <p class="form-control-static">
+                                        {{::$parent.$parent.details.purchaseDate | qmgDate}} at {{::$parent.$parent.details.purchaseDate | qmgTime}}
+                                        (<strong ng-if="!$parent.parent.inCooling">NOT </strong>IN COOLING-OFF PERIOD.)
+                                    </p>
+                                </div>
+                                <label class="col-xs-4 control-label">No claims proof:</label>
+                                <div class="col-xs-8">
+                                    <p class="form-control-static">{{::$parent.$parent.details.noClaimsProofDesc}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </tab>
+                <tab heading="Policyholder information">
+                    <div class="col-xs-5">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-xs-4 control-label">Customer Id:</label>
+                                <div class="col-xs-8">
+                                    <p class="form-control-static">{{::$parent.$parent.details.customerId}}</p>
+                                </div>
+                                <label class="col-xs-4 control-label">Policy holder:</label>
+                                <div class="col-xs-8">
+                                    <p class="form-control-static">
+                                        {{::$parent.$parent.details.policyHolder.title}}
+                                        {{::$parent.$parent.details.policyHolder.firstName}}
+                                        {{::$parent.$parent.details.policyHolder.lastName}}
+                                    </p>
+                                </div>
+                                <label class="col-xs-4 control-label">Date of birth:</label>
+                                <div class="col-xs-8">
+                                    <p class="form-control-static">{{::$parent.$parent.details.policyHolder.dateOfBirth | qmgDate}}</p>
+                                </div>
+                                <label class="col-xs-4 control-label">Joint policy holder(s):</label>
+                                <div class="col-xs-8">
+                                    <p class="form-control-static">
+                                        {{::$parent.$parent.details.jointPolicyHolders}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-7">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="col-xs-4 control-label">Correspondence address:</label>
+                                <div class="col-xs-8">
+                                    <p class="form-control-static">
+                                        {{::$parent.$parent.details.policyHolder.contactDetails.address.postcode}}
+                                    </p>
+                                </div>
+                                <div class="clearfix"></div>
+                                <label class="col-xs-4 control-label">Main telephone:</label>
+                                <div class="col-xs-8">
+                                    <p class="form-control-static">
+                                        {{::$parent.$parent.details.policyHolder.contactDetails.phoneNumber}}
+                                    </p>
+                                </div>
+                                <label class="col-xs-4 control-label">Email address:</label>
+                                <div class="col-xs-8">
+                                    <p class="form-control-static">
+                                        {{::$parent.$parent.details.policyHolder.contactDetails.email}}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </tab>
+                <tab heading="Audit notes">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="form-horizontal">
+                                <div class="form-group">
+                                    <label class="col-xs-2 control-label">Note type:</label>
+                                    <div class="col-xs-10">
+                                        <select class="form-control"></select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-2 control-label">Details:</label>
+                                    <div class="col-xs-10">
+                                        <textarea class="form-control"></textarea>
+                                    </div>
+                                </div>
+                                <div>
+                                    <button class="btn btn-success pull-right">Add note</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table">
+                        <tr><th>Title</th><th>When</th><th>Who</th><th>Details</th></tr>
+                        <tr ng-repeat="entry in $parent.$parent.audit.entries">
+                            <td>{{entry.title}}</td>
+                            <td>{{entry.when | qmgDateAndTime}}</td>
+                            <td>{{entry.who}}</td>
+                            <td>{{entry.details}}</td>
+                        </tr>
+                    </table>
+                </tab>
+                <tab heading="Policy referral information">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-xs-2 control-label">Source:</label>
+                            <div class="col-xs-10">
+                                <p class="form-control-static">
+                                    {{::$parent.$parent.details.referrer.source}}
+                                </p>
+                            </div>
+                            <label class="col-xs-2 control-label">Term:</label>
+                            <div class="col-xs-10">
+                                <p class="form-control-static">
+                                    {{::$parent.$parent.details.referrer.term}}
+                                </p>
+                            </div>
+                            <label class="col-xs-2 control-label">Site:</label>
+                            <div class="col-xs-10">
+                                <p class="form-control-static">
+                                    n/a
+                                </p>
+                            </div>
+                            <label class="col-xs-2 control-label">Medium:</label>
+                            <div class="col-xs-10">
+                                <p class="form-control-static">
+                                    {{::$parent.$parent.details.referrer.medium}}
+                                </p>
+                            </div>
+                            <label class="col-xs-2 control-label">Campaign:</label>
+                            <div class="col-xs-10">
+                                <p class="form-control-static">
+                                    {{::$parent.$parent.details.referrer.campaign}}
+                                </p>
+                            </div>
+                            <label class="col-xs-2 control-label">Origin:</label>
+                            <div class="col-xs-10">
+                                <p class="form-control-static">
+                                    {{::$parent.$parent.details.referrer.origin}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </tab>
+                <tab heading="Authorised persons">
+                    <table class="table">
+                        <tr>
+                            <th>Action</th>
+                            <th>Title</th>
+                            <th>First name</th>
+                            <th>Surname</th>
+                            <th>DOB</th>
+                        </tr>
+                        <tr ng-repeat="person in $parent.$parent.details.authorisedPersons">
+                            <td><a ng-href=''>Remove</a></td>
+                            <td>{{person.title}}</td>
+                            <td>{{person.firstName}}</td>
+                            <td>{{person.lastName}}</td>
+                            <td>{{person.dateOfBirth}}</td>
+                        </tr>
+                    </table>
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <p>Add an authorised person:</p>
+                            <div class="form-group">
+                                <label class="control-label">Title:</label>
+                                <select class="form-control">
+                                    <option value="" disabled selected>Select...</option>
+                                    <option value="Mr">Mr</option>
+                                    <option value="Mrs">Mrs</option>
+                                    <option value="Miss">Miss</option>
+                                    <option value="Ms">Ms</option>
+                                    <option value="Dr">Dr</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">First name:</label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Last name:</label>
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">Date of birth:</label>
+                                <div class="row">
+                                    <div class="col-sm-4">
+                                        <select class="form-control">
+                                            <option disabled selected value="">Select...</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <select class="form-control">
+                                            <option disabled selected value="">Select...</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <select class="form-control">
+                                            <option disabled selected value="">Select...</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <button class="btn btn-success">Add</button>
+                            </div>
+                        </div>
+                    </div>
+                </tab>
+            </tabset>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <tabset>
+                <tab heading="New business">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Price breakdown</div>
+                        <div class="panel-body">
+                            <div class="col-sm-6">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="col-xs-6 control-label">Discount:</label>
+                                        <div class="col-xs-6">
+                                            <p class="form-control-static">
+                                                {{::$parent.$parent.details.discountAmount | qmgMoney}}
+                                            </p>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <label class="col-xs-6 control-label">Insurance premium (excluding ipt):</label>
+                                        <div class="col-xs-6">
+                                            <p class="form-control-static">{{::$parent.$parent.details.insurancePremium | qmgMoney}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="col-xs-4 control-label">Tax (IPT):</label>
+                                        <div class="col-xs-8">
+                                            <p class="form-control-static">
+                                                {{::$parent.$parent.details.tax | qmgMoney}}
+                                            </p>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <label class="col-xs-4 control-label">Total premium:</label>
+                                        <div class="col-xs-8">
+                                            <p class="form-control-static">{{::$parent.$parent.details.premium | qmgMoney}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Premium breakdown</div>
+                        <div class="panel-body" ng-repeat="payment in $parent.$parent.details.paymentsTaken">
+                            <div class="col-sm-6">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="col-xs-6 control-label">Payment type:</label>
+                                        <div class="col-xs-6">
+                                            <p class="form-control-static">
+                                                {{::payment.paymentType}}
+                                            </p>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <label class="col-xs-6 control-label">Card transaction amount:</label>
+                                        <div class="col-xs-6">
+                                            <p ng-if="$parent.$parent.$parent.paymentMethod.payment === 'FULL'" class="form-control-static">
+                                                {{::$parent.$parent.details.premium | qmgMoney}}
+                                            </p>
+                                            <p ng-if="$parent.$parent.paymentMethod.payment !== 'FULL'" class="form-control-static">
+                                                {{::$parent.$parent.details.directDebitDetails.initialAmount | qmgMoney}}
+                                            </p>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <label class="col-xs-6 control-label">Transaction date:</label>
+                                        <div class="col-xs-6">
+                                            <p class="form-control-static">{{::payment.paymentDate | qmgDateAndTime}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="col-xs-4 control-label">Card number:</label>
+                                        <div class="col-xs-8">
+                                            <p class="form-control-static">
+                                                {{::payment.details.masked}}
+                                            </p>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <label class="col-xs-4 control-label">Payment reference:</label>
+                                        <div class="col-xs-8">
+                                            <p class="form-control-static">{{::payment.details.netbanxReference}}</p>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <label class="col-xs-4 control-label">Loan reference:</label>
+                                        <div class="col-xs-8">
+                                            <p class="form-control-static">{{payment.details.loanReference || 'N/A'}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">Direct debit</div>
+                        <div class="panel-body">
+                            <div class="col-sm-6">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="col-xs-6 control-label">Monthly amount:</label>
+                                        <div class="col-xs-6">
+                                            <p class="form-control-static">
+                                                {{::$parent.$parent.details.directDebitDetails.monthlyAmount | qmgMoney}}
+                                            </p>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <label class="col-xs-6 control-label">Total repayable:</label>
+                                        <div class="col-xs-6">
+                                            <p class="form-control-static">{{::$parent.$parent.details.directDebitDetails.totalPayable | qmgMoney}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="col-xs-4 control-label">Interest rate:</label>
+                                        <div class="col-xs-8">
+                                            <p class="form-control-static">
+                                                {{::$parent.$parent.details.directDebitDetails.directDebitRates.interestPercentage}}%
+                                            </p>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        <label class="col-xs-4 control-label">APR:</label>
+                                        <div class="col-xs-8">
+                                            <p class="form-control-static">{{::$parent.$parent.details.directDebitDetails.directDebitRates.apr}}%</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </tab>
+                <tab ng-repeat="adjustment in $parent.$parent.details.adjustments" heading="MTA {{$index +1}}">
+                    <pre>{{adjustment | json}}</pre>
+                </tab>
+            </tabset>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">Policy documents</div>
+        <div class="panel-body">
+            {{$parent.$parent.policy | json}}
+            <span ng-repeat="(label, link) in details.documents">
+                <a href="{{link}}">
+                    <span class="label label-primary">
+                        <span class="glyphicon glyphicon-file"></span>
+                        {{label}}
+                    </span>
+                </a>&nbsp;
+            </span>
+        </div>
+    </div>
+</div>

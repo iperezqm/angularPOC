@@ -1,0 +1,90 @@
+<div class="modal-header">
+    <button type="button" class="close" ng-click="$dismiss()"><span>&times;</span></button>
+    <span class="modal-title" id="myModalLabel">Start cancellation process</span>
+</div>
+<div class="modal-body">
+    <tabset type="pills">
+        <tab heading="1 Category selection">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Cancellation reasons
+                </div>
+                <div class="panel-body">
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">Reasons for cancelling policy:</label>
+                            <div class="col-xs-6">
+                                <select class="form-control" ng-model="reason">
+                                    <option disabled value="">Select...</option>
+                                    <option>Alternative insurer</option>
+                                    <option>Cancelled and replaced</option>
+                                    <option>Complaint</option>
+                                    <option>Defaulted on loan</option>
+                                    <option>Dissatisfied with service / cover</option>
+                                    <option>Non-disclosure</option>
+                                    <option>Not able to cover</option>
+                                    <option>Not required - changed mind</option>
+                                    <option>Not required - dual insured</option>
+                                    <option>Not required - home move</option>
+                                    <option>Test purchase</option>
+                                    <option>Voidance</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">Cancel to inception?:</label>
+                            <div class="col-xs-3 btn-group">
+                                <button ng-model="cancelToInception" btn-radio="true" class="btn"
+                                    ng-class="{'btn-success': cancelToInception, 'btn-default': !cancelToInception}">
+                                    Yes
+                                </button>
+                                <button ng-model="cancelToInception" btn-radio="false" class="btn"
+                                    ng-class="{'btn-success': !cancelToInception, 'btn-default': cancelToInception}">
+                                    No
+                                </button>
+                            </div>
+                            <label class="col-xs-3 control-label">Charge broker cancellation fee?:</label>
+                            <div class="col-xs-3 btn-group">
+                                <button ng-model="chargeCancellationFee" btn-radio="true" class="btn"
+                                    ng-class="{'btn-success': chargeCancellationFee, 'btn-default': !chargeCancellationFee}">
+                                    Yes
+                                </button>
+                                <button ng-model="chargeCancellationFee" btn-radio="false" class="btn"
+                                    ng-class="{'btn-success': !chargeCancellationFee, 'btn-default': chargeCancellationFee}">
+                                    No
+                                </button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-3 control-label">Cancellation date:</label>
+                            <div class="col-xs-3">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" datepicker-popup="yyyy-MM-dd" ng-model="cancellationDate" is-open="opened" close-text="Close" ng-disabled="cancelToInception">
+                                    <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" ng-click="opened=true"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Select policies to cancel
+                </div>
+                <div class="panel-body">
+                    <table class="table">
+                        <tr><th>Policy to cancel</th><th>Has claim?</th><th>Cancel this policy?</th></tr>
+                    </table>
+                    <div class="pull-right">
+                        <button class="btn btn-success" disabled>Calculate cancellation</button>
+                    </div>
+                </div>
+            </div>
+        </tab>
+        <tab heading="2 Policy cancellation" disable="true">
+
+        </tab>
+    </tabset>
+</div>

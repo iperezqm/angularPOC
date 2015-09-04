@@ -1,0 +1,95 @@
+<div ng-controller="BackofficeSearchController">
+    <div class="panel panel-default">
+        <div class="panel-heading">Search</div>
+        <div class="panel-body">
+            <form ng-submit="search()">
+                <div class="input-group col-sm-6">
+                    <input type="text" ng-model="$root.searchText" class="form-control">
+                    <span class="input-group-btn">
+                        <button type="submit" class="btn btn-success">
+                            <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div ng-show="enquiries" class="panel panel-default">
+        <div class="panel-heading">Enquiries</div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-condensed">
+                    <tr>
+                        <th></th>
+                        <th>Business line</th>
+                        <th>Surname</th>
+                        <th>First name</th>
+                        <th>Address</th>
+                        <th>Telephone</th>
+                        <th>CID</th>
+                        <th>Email</th>
+                    </tr>
+                    <tr ng-repeat="enquiry in enquiries">
+                        <td><a class="btn btn-default btn-xs" ui-sref="backofficeAmendEnquiry({sessionId: enquiry.doc.sessionId, enquiryIndex: enquiry.doc.enquiryIndex})">Amend</a></td>
+                        <td>{{enquiry.category}}</td>
+                        <td>{{enquiry.doc.policyholder.name.last}}</td>
+                        <td>{{enquiry.doc.policyholder.name.first}}</td>
+                        <td nowrap>{{enquiry.doc.policyholder.address.postcode}}</td>
+                        <td>{{enquiry.doc.policyholder.phoneNumber}}</td>
+                        <td>{{enquiry.doc.legacyCustomer}}</td>
+                        <td>{{enquiry.doc.policyholder.email}}</td>
+                    </tr>
+                </table>
+            </div>
+            <pagination
+                total-items="totalEnquiries"
+                items-per-page="itemsPerPage"
+                ng-model="enquiriesPage"
+                ng-change="getEnquiries()"
+                class="pagination-sm pull-right">
+            </pagination>
+        </div>
+    </div>
+    <div ng-show="policies" class="panel panel-default">
+        <div class="panel-heading">Policies</div>
+        <div class="panel-body">
+            <div class="table-responsive">
+                <table class="table table-condensed">
+                    <tr>
+                        <th></th>
+                        <th>Business line</th>
+                        <th>Surname</th>
+                        <th>First name</th>
+                        <th>Address</th>
+                        <th>Telephone</th>
+                        <th>Policy number</th>
+                        <th>Email</th>
+                        <th>Payment type</th>
+                        <th>CID</th>
+                        <th>Status</th>
+                    </tr>
+                    <tr ng-repeat="policy in policies">
+                        <td><a class="btn btn-default btn-xs" ui-sref="backofficePolicyDetail({policyId: policy.doc.id})">View</a></td>
+                        <td>{{policy.category}}</td>
+                        <td>{{policy.doc.policyholder.lastName}}</td>
+                        <td>{{policy.doc.policyholder.firstName}}</td>
+                        <td nowrap>{{policy.doc.policyholder.contactDetails.address.postcode}}</td>
+                        <td>{{policy.doc.policyholder.contactDetails.phoneNumber}}</td>
+                        <td>{{policy.doc.number}}</td>
+                        <td>{{policy.doc.policyholder.contactDetails.email}}</td>
+                        <td>{{policy.doc.paymentType}}</td>
+                        <td>{{policy.doc.legacyCustomer}}</td>
+                        <td>{{policy.doc.status}}</td>
+                    </tr>
+                </table>
+            </div>
+            <pagination
+                total-items="totalPolicies"
+                items-per-page="itemsPerPage"
+                ng-model="policiesPage"
+                ng-change="getPolicies()"
+                class="pagination-sm pull-right">
+            </pagination>
+        </div>
+    </div>
+</div>

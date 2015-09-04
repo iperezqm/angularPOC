@@ -26,8 +26,8 @@
                             <div class="list-group">
                                 <div class="list-group-item" ng-if="quote.quoted">
                                     <img class="img-responsive center-block" src="{{quote.productData.logo[0].url}}">
-                                    <h3>{{quote.priceIncludingSelectedExtras.annual.money.amount | currency:'£':2}}</h3>
-                                    <h5>Monthly: {{quote.priceIncludingSelectedExtras.monthly.money.amount | currency:'£':2 }}</h5>
+                                    <h3>{{quote.priceIncludingSelectedExtras.annual | qmgMoney}}</h3>
+                                    <h5>Monthly: {{quote.priceIncludingSelectedExtras.monthly | qmgMoney}}</h5>
                                 </div>
                                 <div class="list-group-item" ng-if="!quote.quoted">
                                     <div ng-if="quote.declineReasons">
@@ -76,13 +76,13 @@
                                 </tr>
                                 <tr>
                                     <td>{{selectedQuote.details.excess[0].label}}</td>
-                                    <td>{{selectedQuote.details.excess[0].amount | currency:'£':2}}</td>
-                                    <td>{{selectedQuote.details.excess[2].amount | currency:'£':2}}</td>
+                                    <td>{{selectedQuote.details.excess[0] | qmgMoney}}</td>
+                                    <td>{{selectedQuote.details.excess[2] | qmgMoney}}</td>
                                 </tr>
                                 <tr>
                                     <td>{{selectedQuote.details.excess[1].label}}</td>
-                                    <td>{{selectedQuote.details.excess[1].amount | currency:'£':2}}</td>
-                                    <td>{{selectedQuote.details.excess[3].amount | currency:'£':2}}</td>
+                                    <td>{{selectedQuote.details.excess[1] | qmgMoney}}</td>
+                                    <td>{{selectedQuote.details.excess[3] | qmgMoney}}</td>
                                 </tr>
                                 <tr>
                             </table>

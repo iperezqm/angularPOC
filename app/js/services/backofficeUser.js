@@ -1,14 +1,27 @@
 'use strict';
 
 angular.module('QMetric.internal.questionsetPOC').service('securedEndpointInterceptor', function(authenticationToken, configuration) {
+    var isSecured = function(endpointUrl, securedEndpoints) {
+        var found = false;
+        if (!securedEndpoints) {
+            securedEndpoints = configuration.backoffice.secured;
+        }
+        angular.forEach(securedEndpoints, function(securedEndpointDefinition) {
+            if (angular.isObject(securedEndpointDefinition)) {
+                found = found || isSecured(endpointUrl, securedEndpointDefinition);
+            } else {
+                found = found || (endpointUrl.indexOf(securedEndpointDefinition) === 0);
+            }
+        });
+
+        return found;
+    };
+
     return {
         request: function(config) {
-            _.each(configuration.backoffice.secured, function(endpoint) {
-                if (config.url.indexOf(endpoint) === 0) {
-                    config.headers.Authorization = 'bearer ' + authenticationToken.get();
-                    return false;
-                }
-            });
+            if (isSecured(config.url)) {
+                config.headers.Authorization = 'bearer ' + authenticationToken.get();
+            }
 
             return config;
         }
@@ -39,8 +52,7 @@ angular.module('QMetric.internal.questionsetPOC').service('backofficeUser', func
         serverConfig.get().then(function(cookieName) {
             authenticationToken.initialize(cookieName);
             if (!authenticationToken.get()) {
-                $http.get(configuration.backoffice.login + $window.location.pathname.replace('/', '')).then(function(response) {
-                    console.log('after login', response);
+                $http.get(configuration.backoffice.login + $window.location.pathname).then(function(response) {
                     $window.location.href = response.data.url;
                 });
             } else {

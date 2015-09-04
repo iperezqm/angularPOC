@@ -41,8 +41,8 @@
                     </p>
                 </div>
                 <div class="col-xs-3">
-                    <h2>{{quote.price.amount | currency : '£' : 2}}</h2>
-                    <p>Monthly: {{quote.monthlyPrice.amount| currency : '£' : 2}}<p>
+                    <h2>{{quote.price | qmgMoney}}</h2>
+                    <p>Monthly: {{quote.monthlyPrice | qmgMoney}}<p>
                 </div>
                 <div class="col-xs-3">
                     <button class="btn btn-success">
